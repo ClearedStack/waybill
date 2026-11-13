@@ -1,0 +1,23 @@
+{
+  "slug": "waybill",
+  "name": "Waybill",
+  "formerly": "cs-05-provenance",
+  "kind": "worker",
+  "stage": 5,
+  "namespace": "cs-workers",
+  "responsibility": "Credits where an idea came from and writes the specification a tool is built from.",
+  "interfaces": [
+    "Leases approved items from Muster",
+    "Emits the credit note and the build specification"
+  ],
+  "repository": "waybill",
+  "image": "waybill",
+  "dependsOn": [
+    "muster"
+  ],
+  "memory": "30 MiB",
+  "version": "v0.1.0-draft",
+  "subTools": [
+    "spec-profiles"
+  ]
+}
