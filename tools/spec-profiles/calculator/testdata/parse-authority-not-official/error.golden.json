@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0202",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the authority is not one of the official publications",
+    "field": "authority[0].source"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0217",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the upper bound is missing or not a plain decimal",
+    "field": "tool.inputs[0].max"
+  }
+}

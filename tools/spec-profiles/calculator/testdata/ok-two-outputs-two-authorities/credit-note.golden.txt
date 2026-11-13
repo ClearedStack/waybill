@@ -1,0 +1,3 @@
+Idea seen in: Tessaly Scorebook (Tessaly Imaginary Software)
+What we took: the idea for this calculator: weighted evaluation score and margin over a threshold.
+What we did differently: built only from DFARS 297.7001; NIST SP 8999 and public worked examples; no vendor code, text, layout or test data was used.

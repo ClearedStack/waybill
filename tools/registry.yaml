@@ -1,0 +1,12 @@
+# Sub-tools of waybill. Each has a matching rule, the logic and fixtures.
+# A test (tools/spec-profiles/profiles_test.go) checks this file against the
+# profiles compiled into the binary and against the folders on disk.
+sub_tools:
+  - name: spec-profiles
+    path: tools/spec-profiles
+    profiles:
+      - tool_type: calculator
+        path: tools/spec-profiles/calculator
+        match: tools/spec-profiles/calculator/match.go
+        logic: tools/spec-profiles/calculator/build.go
+        fixtures: tools/spec-profiles/calculator/testdata

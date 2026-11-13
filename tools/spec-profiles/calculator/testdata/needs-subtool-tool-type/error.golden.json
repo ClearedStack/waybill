@@ -1,0 +1,9 @@
+{
+  "item_id": "itm-0101",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "no spec-profile covers this tool type",
+    "field": "tool_type"
+  }
+}

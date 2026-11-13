@@ -1,0 +1,9 @@
+{
+  "item_id": "itm-0105",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "no rule covers this contract version",
+    "field": "contract_version"
+  }
+}

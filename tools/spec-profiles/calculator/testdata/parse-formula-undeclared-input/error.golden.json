@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0209",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the formula uses a name that is not a declared input",
+    "field": "tool.outputs[0].formula"
+  }
+}

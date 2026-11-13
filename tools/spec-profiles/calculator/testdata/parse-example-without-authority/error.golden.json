@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0206",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the worked example does not name one of the record's authorities",
+    "field": "tool.worked_examples[0].authority"
+  }
+}
