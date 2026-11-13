@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "E_PARSE",
+    "message": "the record is not valid JSON of the expected shape"
+  }
+}

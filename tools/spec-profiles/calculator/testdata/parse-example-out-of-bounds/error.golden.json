@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0204",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the value for input 0 is outside its bounds",
+    "field": "tool.worked_examples[0].inputs"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "item_id": "itm-0104",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "no rule covers this kind of determination",
+    "field": "determination.decision"
+  }
+}

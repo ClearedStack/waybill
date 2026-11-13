@@ -1,0 +1,9 @@
+{
+  "item_id": "itm-0103",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "the calculator profile does not cover this value type",
+    "field": "tool.inputs[0].type"
+  }
+}

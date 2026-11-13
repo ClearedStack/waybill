@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0203",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the formula for output 0 does not give the expected value",
+    "field": "tool.worked_examples[1].expected"
+  }
+}

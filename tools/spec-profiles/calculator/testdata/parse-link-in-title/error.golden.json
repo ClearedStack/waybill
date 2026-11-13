@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0212",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the title is missing or malformed",
+    "field": "title"
+  }
+}

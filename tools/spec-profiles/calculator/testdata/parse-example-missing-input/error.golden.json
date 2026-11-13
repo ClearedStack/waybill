@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0205",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the worked example does not give exactly the declared inputs",
+    "field": "tool.worked_examples[2].inputs"
+  }
+}
