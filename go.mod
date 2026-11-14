@@ -1,3 +1,3 @@
-module github.com/clearedstack/waybill
+module github.com/ClearedStack/waybill
 
-go 1.22
+go 1.24

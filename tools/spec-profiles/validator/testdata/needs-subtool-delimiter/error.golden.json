@@ -1,0 +1,9 @@
+{
+  "item_id": "PA-0302",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "the validator profile does not cover this delimiter",
+    "field": "tool.delimiter"
+  }
+}

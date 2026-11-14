@@ -1,0 +1,8 @@
+{
+  "item_id": "PA-0403",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the decision graph contains a cycle",
+    "field": "tool.questions"
+  }
+}

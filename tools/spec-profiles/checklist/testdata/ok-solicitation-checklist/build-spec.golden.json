@@ -1,0 +1,86 @@
+{
+  "provenance": {
+    "item_id": "PA-0201",
+    "idea_seen_in": "Bramblegate Packet Checker (Bramblegate Fictional Systems)",
+    "what_we_took": "the idea for this checklist: synthetic solicitation readiness checklist.",
+    "what_we_did_differently": "built only from FAR 97.201-2; DFARS 297.201-4 and public worked examples; no vendor code, text, layout or test data was used."
+  },
+  "authority": [
+    {
+      "id": "far_97_201",
+      "source": "FAR",
+      "citation": "FAR 97.201-2",
+      "title": "Made-up clause for tests: solicitation file readiness (FAR has no part 97)",
+      "url": "https://www.acquisition.gov/far/part-97"
+    },
+    {
+      "id": "dfars_297_201",
+      "source": "DFARS",
+      "citation": "DFARS 297.201-4",
+      "title": "Made-up clause for tests: supplemental notice review (DFARS has no part 297)",
+      "url": "https://www.acquisition.gov/dfars/part-297"
+    }
+  ],
+  "schema": {
+    "tool_type": "checklist",
+    "title": "synthetic solicitation readiness checklist",
+    "items": [
+      {
+        "id": "funding_certified",
+        "label": "Is written funding certification recorded in the file?",
+        "kind": "yes_no",
+        "required": true,
+        "citation": "far_97_201",
+        "help": "Required for every synthetic test solicitation."
+      },
+      {
+        "id": "supplemental_notice_posted",
+        "label": "Was the supplemental synopsis posted or marked exempt?",
+        "kind": "yes_no",
+        "required": true,
+        "na_allowed": true,
+        "citation": "dfars_297_201"
+      },
+      {
+        "id": "optional_debrief_template",
+        "label": "Is an optional debrief outline attached?",
+        "kind": "yes_no",
+        "required": false,
+        "na_allowed": true,
+        "citation": "far_97_201"
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "authority": "far_97_201",
+      "inputs": {
+        "funding_certified": "yes",
+        "optional_debrief_template": "no",
+        "supplemental_notice_posted": "na"
+      },
+      "expected": {
+        "status": "complete",
+        "unmet_required": 0,
+        "yes_count": 1,
+        "no_count": 1,
+        "na_count": 1
+      }
+    },
+    {
+      "authority": "dfars_297_201",
+      "inputs": {
+        "funding_certified": "no",
+        "optional_debrief_template": "yes",
+        "supplemental_notice_posted": "yes"
+      },
+      "expected": {
+        "status": "incomplete",
+        "unmet_required": 1,
+        "yes_count": 2,
+        "no_count": 1,
+        "na_count": 0
+      }
+    }
+  ]
+}

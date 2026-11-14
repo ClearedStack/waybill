@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -18,7 +19,7 @@ func TestCompileFromFile(t *testing.T) {
 	if code != exitOK || stderr.Len() != 0 {
 		t.Fatalf("exit %d, stderr %q", code, stderr.String())
 	}
-	if !strings.Contains(stdout.String(), `"state": "building"`) {
+	if !strings.Contains(stdout.String(), `"state": "approved"`) {
 		t.Errorf("stdout: %s", stdout.String())
 	}
 	for written, golden := range map[string]string{
@@ -98,8 +99,60 @@ func TestOversizedRecord(t *testing.T) {
 	}
 }
 
+func TestRunStandinOnce(t *testing.T) {
+	rawRec, err := os.ReadFile(filepath.Join(fixtures, "ok-opt-out-neutral", "record.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rec map[string]any
+	if err := json.Unmarshal(rawRec, &rec); err != nil {
+		t.Fatal(err)
+	}
+	seed := []map[string]any{
+		{
+			"id":    "PA-0042",
+			"state": "building",
+			"lane":  "urgent",
+			"next":  "waybill",
+			"results": map[string]any{
+				"countersign": map[string]any{
+					"outcome": "approve",
+					"waybill": rec,
+				},
+			},
+		},
+	}
+	seedBytes, err := json.Marshal(seed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	seedFile := filepath.Join(t.TempDir(), "seed.json")
+	if err := os.WriteFile(seedFile, seedBytes, 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	var stdout, stderr bytes.Buffer
+	code := run([]string{"run", "-standin", "-seed", seedFile, "-once", "-spool", t.TempDir()},
+		strings.NewReader(""), &stdout, &stderr)
+	if code != exitOK {
+		t.Fatalf("exit %d, stdout=%q stderr=%q", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), `"event":"delivered"`) || !strings.Contains(stderr.String(), `"item_id":"PA-0042"`) {
+		t.Errorf("expected delivered log line, got %q", stderr.String())
+	}
+}
+
+func TestRunUnknownContractVersionRefused(t *testing.T) {
+	t.Setenv("CONTRACT_VERSION", "v99")
+	var stdout, stderr bytes.Buffer
+	code := run([]string{"run", "-standin", "-once", "-spool", t.TempDir()}, strings.NewReader(""), &stdout, &stderr)
+	if code != exitFault || !strings.Contains(stdout.String(), `"code": "E_NEEDS_SUBTOOL"`) {
+		t.Fatalf("exit %d, stdout=%q", code, stdout.String())
+	}
+}
+
 func TestUsage(t *testing.T) {
-	for _, args := range [][]string{nil, {"build"}, {"compile", "-nope"}, {"compile", "a", "b"}} {
+	for _, args := range [][]string{nil, {"build"}, {"compile", "-nope"}, {"compile", "a", "b"}, {"run", "extra"}, {"version", "extra"}} {
 		var stdout, stderr bytes.Buffer
 		if code := run(args, strings.NewReader(""), &stdout, &stderr); code != exitUsage || stdout.Len() != 0 {
 			t.Errorf("%v: exit %d, stdout %q", args, code, stdout.String())

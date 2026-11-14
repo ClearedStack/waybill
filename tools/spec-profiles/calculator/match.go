@@ -5,7 +5,7 @@
 // expr.go) and the fixtures (testdata).
 package calculator
 
-import "github.com/clearedstack/waybill/internal/record"
+import "github.com/ClearedStack/waybill/internal/record"
 
 // ToolType is the tool type this profile covers.
 const ToolType = "calculator"

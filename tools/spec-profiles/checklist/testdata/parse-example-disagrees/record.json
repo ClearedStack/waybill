@@ -1,0 +1,48 @@
+{
+  "contract_version": "v1",
+  "item_id": "PA-0203",
+  "state": "approved",
+  "determination": {
+    "decision": "build"
+  },
+  "source": {
+    "product": "Bramblegate Packet Checker",
+    "vendor": "Bramblegate Fictional Systems"
+  },
+  "title": "synthetic solicitation readiness checklist",
+  "authority": [
+    {
+      "id": "far_97_201",
+      "source": "FAR",
+      "citation": "FAR 97.201-2",
+      "title": "Made-up clause for tests: solicitation file readiness (FAR has no part 97)"
+    }
+  ],
+  "tool_type": "checklist",
+  "tool": {
+    "items": [
+      {
+        "id": "funding_certified",
+        "label": "Is written funding certification recorded in the file?",
+        "required": true,
+        "na_allowed": false,
+        "citation": "far_97_201"
+      }
+    ],
+    "worked_examples": [
+      {
+        "authority": "far_97_201",
+        "answers": {
+          "funding_certified": "no"
+        },
+        "expected": {
+          "status": "complete",
+          "unmet_required": 0,
+          "yes_count": 0,
+          "no_count": 1,
+          "na_count": 0
+        }
+      }
+    ]
+  }
+}

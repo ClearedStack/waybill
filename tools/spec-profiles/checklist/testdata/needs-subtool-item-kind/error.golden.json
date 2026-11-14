@@ -1,0 +1,9 @@
+{
+  "item_id": "PA-0202",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "the checklist profile does not cover this item kind",
+    "field": "tool.items[0].kind"
+  }
+}

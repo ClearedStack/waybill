@@ -18,7 +18,7 @@
       "title": "Made-up clause for tests: prorated daily allowance (FAR has no part 97)"
     }
   ],
-  "tool_type": "decision-tree",
+  "tool_type": "schedule-builder",
   "tool": {
     "inputs": [
       {

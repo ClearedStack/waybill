@@ -1,0 +1,8 @@
+{
+  "item_id": "PA-0404",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the outcome is not reachable from start",
+    "field": "tool.outcomes[1].id"
+  }
+}

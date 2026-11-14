@@ -1,0 +1,8 @@
+{
+  "item_id": "PA-0204",
+  "error": {
+    "code": "E_PARSE",
+    "message": "na is not allowed for this checklist item",
+    "field": "tool.worked_examples[0].answers.funding_certified"
+  }
+}

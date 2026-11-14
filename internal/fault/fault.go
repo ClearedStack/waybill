@@ -5,6 +5,11 @@
 // credential: only a code, a fixed message and the position of the field.
 package fault
 
+import (
+	"crypto/sha256"
+	"encoding/hex"
+)
+
 // Code is one of the three public error codes.
 type Code string
 
@@ -27,10 +32,35 @@ type Error struct {
 }
 
 func (e *Error) Error() string {
+	if e == nil {
+		return ""
+	}
 	if e.Field == "" {
 		return string(e.Code) + ": " + e.Message
 	}
 	return string(e.Code) + ": " + e.Field + ": " + e.Message
+}
+
+// Fingerprint returns a deterministic 16-hex SHA-256 digest over the sanitized
+// error code, field path, and fixed message so repeated failures deduplicate
+// cleanly without exposing input data.
+func (e *Error) Fingerprint() string {
+	if e == nil {
+		return ""
+	}
+	h := sha256.New()
+	h.Write([]byte(e.Code))
+	h.Write([]byte{0})
+	h.Write([]byte(e.Field))
+	h.Write([]byte{0})
+	h.Write([]byte(e.Message))
+	sum := h.Sum(nil)
+	return hex.EncodeToString(sum[:8])
+}
+
+// Slow reports E_TIMEOUT.
+func Slow(field, message string) *Error {
+	return &Error{Code: Timeout, Message: message, Field: field}
 }
 
 // Broken reports E_PARSE.

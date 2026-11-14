@@ -6,7 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/clearedstack/waybill/internal/fault"
+	"github.com/ClearedStack/waybill/internal/fault"
+	"github.com/ClearedStack/waybill/internal/record"
 )
 
 const base = "../../tools/spec-profiles/calculator/testdata/ok-capped-allowance/record.json"
@@ -41,6 +42,35 @@ func TestWallCatchesProductNameInSchema(t *testing.T) {
 	}
 	if res.BuildSpec != nil || res.CreditNote != "" {
 		t.Error("output was produced for a record that breached the wall")
+	}
+}
+
+func TestOptOutStripsProductAndVendorEverywhere(t *testing.T) {
+	data, err := os.ReadFile("../../tools/spec-profiles/calculator/testdata/ok-opt-out-neutral/record.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	rec, fErr := record.Parse(data)
+	if fErr != nil {
+		t.Fatalf("parse: %v", fErr)
+	}
+	res, wb, fErr := CompileRecord(rec)
+	if fErr != nil {
+		t.Fatalf("compile: %v", fErr)
+	}
+	if res.State != StateBuilding {
+		t.Errorf("state = %q, want %q", res.State, StateBuilding)
+	}
+	if res.SLA == nil || !res.SLA.VerificationWithinSLA || res.SLA.ResolutionWithinSLA == nil || !*res.SLA.ResolutionWithinSLA {
+		t.Fatalf("unexpected SLA: %+v", res.SLA)
+	}
+	raw, err := json.Marshal(wb)
+	if err != nil {
+		t.Fatal(err)
+	}
+	joined := strings.ToLower(res.CreditNote + "\n" + string(raw))
+	if strings.Contains(joined, "quillmarsh") {
+		t.Fatalf("vendor/product leaked under opt-out: %s", joined)
 	}
 }
 

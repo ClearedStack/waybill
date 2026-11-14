@@ -1,0 +1,46 @@
+{
+  "contract_version": "v1",
+  "item_id": "PA-0303",
+  "state": "approved",
+  "determination": {
+    "decision": "build"
+  },
+  "source": {
+    "product": "Larkspur CLIN Schedule Linter",
+    "vendor": "Larkspur Synthetic Works"
+  },
+  "title": "synthetic line item schedule validator",
+  "authority": [
+    {
+      "id": "far_97_301",
+      "source": "FAR",
+      "citation": "FAR 97.301-1",
+      "title": "Made-up clause for tests: uniform line item schedule format (FAR has no part 97)"
+    }
+  ],
+  "tool_type": "validator",
+  "tool": {
+    "delimiter": "comma",
+    "has_header": false,
+    "columns": [
+      {
+        "id": "award_date",
+        "label": "Award date",
+        "required": true,
+        "rule": "iso_date",
+        "citation": "far_97_301"
+      }
+    ],
+    "worked_examples": [
+      {
+        "authority": "far_97_301",
+        "input": "2026-03-01\n",
+        "expected": {
+          "valid": true,
+          "row_count": 1,
+          "error_count": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+Idea seen in: Bramblegate Packet Checker (Bramblegate Fictional Systems)
+What we took: the idea for this checklist: synthetic solicitation readiness checklist.
+What we did differently: built only from FAR 97.201-2; DFARS 297.201-4 and public worked examples; no vendor code, text, layout or test data was used.

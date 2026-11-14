@@ -6,9 +6,9 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/clearedstack/waybill/internal/fault"
-	"github.com/clearedstack/waybill/internal/record"
-	"github.com/clearedstack/waybill/internal/strictjson"
+	"github.com/ClearedStack/waybill/internal/fault"
+	"github.com/ClearedStack/waybill/internal/record"
+	"github.com/ClearedStack/waybill/internal/strictjson"
 )
 
 const (
@@ -198,6 +198,29 @@ func Build(rec *record.Record) (*Schema, []Vector, *fault.Error) {
 		vectors = append(vectors, v)
 	}
 	return schema, vectors, nil
+}
+
+// BuildFull turns a calculator record into both Waybill's SPEC.md schema and
+// vectors and Moldloft's build-spec-v1 calculator body and worked examples.
+func BuildFull(rec *record.Record) (*Schema, []Vector, *MoldloftBody, []MoldloftExample, *fault.Error) {
+	schema, vectors, err := Build(rec)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	names := make(map[string]bool, len(schema.Inputs))
+	for _, in := range schema.Inputs {
+		names[in.Name] = true
+	}
+	formulas := make(map[string]node, len(schema.Outputs))
+	for _, out := range schema.Outputs {
+		tree, _ := parseFormula(out.Formula, names)
+		formulas[out.Name] = tree
+	}
+	mBody, mExamples, err := lowerToMoldloft(rec, schema, formulas, vectors)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	return schema, vectors, mBody, mExamples, nil
 }
 
 // checkType accepts the one value type this profile covers. A well-formed

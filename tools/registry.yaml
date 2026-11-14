@@ -10,3 +10,18 @@ sub_tools:
         match: tools/spec-profiles/calculator/match.go
         logic: tools/spec-profiles/calculator/build.go
         fixtures: tools/spec-profiles/calculator/testdata
+      - tool_type: checklist
+        path: tools/spec-profiles/checklist
+        match: tools/spec-profiles/checklist/match.go
+        logic: tools/spec-profiles/checklist/build.go
+        fixtures: tools/spec-profiles/checklist/testdata
+      - tool_type: validator
+        path: tools/spec-profiles/validator
+        match: tools/spec-profiles/validator/match.go
+        logic: tools/spec-profiles/validator/build.go
+        fixtures: tools/spec-profiles/validator/testdata
+      - tool_type: decision-tree
+        path: tools/spec-profiles/decision-tree
+        match: tools/spec-profiles/decision-tree/match.go
+        logic: tools/spec-profiles/decision-tree/build.go
+        fixtures: tools/spec-profiles/decision-tree/testdata

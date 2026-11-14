@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/clearedstack/waybill/internal/buildspec"
-	"github.com/clearedstack/waybill/internal/compile"
+	"github.com/ClearedStack/waybill/internal/buildspec"
+	"github.com/ClearedStack/waybill/internal/compile"
 )
 
 var update = flag.Bool("update", false, "rewrite the golden files from the current behaviour")
@@ -51,8 +51,11 @@ func TestFixtures(t *testing.T) {
 				if res.Error != nil {
 					t.Fatalf("unexpected error: %v", res.Error)
 				}
-				if res.State != compile.StateBuilding {
+				if res.State != compile.StateApproved && res.State != compile.StateBuilding {
 					t.Errorf("state = %q", res.State)
+				}
+				if res.Spec == nil {
+					t.Error("missing Moldloft build-spec-v1 spec")
 				}
 				golden(t, filepath.Join(dir, "credit-note.golden.txt"), []byte(res.CreditNote))
 				golden(t, filepath.Join(dir, "build-spec.golden.json"), encode(t, res.BuildSpec))

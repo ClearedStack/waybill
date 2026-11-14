@@ -1,0 +1,9 @@
+{
+  "item_id": "PA-0303",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "the validator profile does not cover this column rule",
+    "field": "tool.columns[0].rule"
+  }
+}

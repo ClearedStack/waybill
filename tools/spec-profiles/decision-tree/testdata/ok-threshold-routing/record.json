@@ -1,0 +1,117 @@
+{
+  "contract_version": "v1",
+  "item_id": "PA-0401",
+  "state": "approved",
+  "determination": {
+    "decision": "build"
+  },
+  "source": {
+    "product": "Thornfield Routing Wizard",
+    "vendor": "Thornfield Testware"
+  },
+  "title": "synthetic threshold routing decision tree",
+  "authority": [
+    {
+      "id": "far_97_401",
+      "source": "FAR",
+      "citation": "FAR 97.401-1",
+      "title": "Made-up clause for tests: simplified routing thresholds (FAR has no part 97)",
+      "url": "https://www.acquisition.gov/far/part-97"
+    },
+    {
+      "id": "nist_800_997",
+      "source": "NIST",
+      "citation": "NIST SP 800-997 Rev. 1, 3.1",
+      "title": "Made-up publication for tests: synthetic safeguard review (NIST has no SP 800-997)",
+      "url": "https://csrc.nist.gov/publications/sp800"
+    }
+  ],
+  "tool_type": "decision-tree",
+  "tool": {
+    "start": "above_micro_limit",
+    "questions": [
+      {
+        "id": "above_micro_limit",
+        "prompt": "Does the estimated synthetic order exceed the micro-limit?",
+        "citation": "far_97_401",
+        "options": [
+          {
+            "key": "no",
+            "label": "No, at or below the micro-limit",
+            "next": "streamlined_eligible"
+          },
+          {
+            "key": "yes",
+            "label": "Yes, above the micro-limit",
+            "next": "handles_controlled_records"
+          }
+        ]
+      },
+      {
+        "id": "handles_controlled_records",
+        "prompt": "Does performance involve synthetic controlled records?",
+        "citation": "nist_800_997",
+        "options": [
+          {
+            "key": "no",
+            "label": "No controlled records",
+            "next": "standard_review"
+          },
+          {
+            "key": "yes",
+            "label": "Yes, controlled records are involved",
+            "next": "streamlined_ineligible"
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "streamlined_eligible",
+        "title": "Eligible for synthetic micro-purchase path",
+        "summary": "Order stays at or below the synthetic micro-limit under FAR 97.401-1.",
+        "status": "eligible",
+        "citation": "far_97_401"
+      },
+      {
+        "id": "standard_review",
+        "title": "Requires synthetic standard contracting review",
+        "summary": "Order exceeds the micro-limit without synthetic controlled records.",
+        "status": "review",
+        "citation": "far_97_401"
+      },
+      {
+        "id": "streamlined_ineligible",
+        "title": "Ineligible for synthetic streamlined routing",
+        "summary": "Safeguard review under NIST SP 800-997 Rev. 1, 3.1 applies before solicitation.",
+        "status": "ineligible",
+        "citation": "nist_800_997"
+      }
+    ],
+    "worked_examples": [
+      {
+        "authority": "far_97_401",
+        "answers": {
+          "above_micro_limit": "no"
+        },
+        "expected": {
+          "outcome": "streamlined_eligible",
+          "status": "eligible",
+          "steps": 1
+        }
+      },
+      {
+        "authority": "nist_800_997",
+        "answers": {
+          "above_micro_limit": "yes",
+          "handles_controlled_records": "yes"
+        },
+        "expected": {
+          "outcome": "streamlined_ineligible",
+          "status": "ineligible",
+          "steps": 2
+        }
+      }
+    ]
+  }
+}

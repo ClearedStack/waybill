@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/clearedstack/waybill/internal/fault"
-	"github.com/clearedstack/waybill/internal/record"
+	"github.com/ClearedStack/waybill/internal/fault"
+	"github.com/ClearedStack/waybill/internal/record"
 )
 
 const root = "../.."
@@ -53,11 +53,13 @@ func TestRegistry(t *testing.T) {
 }
 
 func TestSelect(t *testing.T) {
-	p, err := Select(&record.Record{ToolType: "calculator"})
-	if err != nil || p.ToolType != "calculator" {
-		t.Fatalf("calculator: %v, %v", p, err)
+	for _, tt := range []string{"calculator", "checklist", "validator", "decision-tree"} {
+		p, err := Select(&record.Record{ToolType: tt})
+		if err != nil || p.ToolType != tt {
+			t.Fatalf("%s: %v, %v", tt, p, err)
+		}
 	}
-	if _, err := Select(&record.Record{ToolType: "decision-tree"}); err == nil || err.Code != fault.NeedsSubtool {
+	if _, err := Select(&record.Record{ToolType: "schedule-builder"}); err == nil || err.Code != fault.NeedsSubtool {
 		t.Fatalf("unknown tool type: %v", err)
 	}
 }

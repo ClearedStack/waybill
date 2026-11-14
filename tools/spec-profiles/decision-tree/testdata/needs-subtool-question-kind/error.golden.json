@@ -1,0 +1,9 @@
+{
+  "item_id": "PA-0402",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "the decision-tree profile does not cover this question kind",
+    "field": "tool.questions[0].kind"
+  }
+}

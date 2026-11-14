@@ -1,0 +1,3 @@
+Idea seen in: Thornfield Routing Wizard (Thornfield Testware)
+What we took: the idea for this decision-tree: synthetic threshold routing decision tree.
+What we did differently: built only from FAR 97.401-1; NIST SP 800-997 Rev. 1, 3.1 and public worked examples; no vendor code, text, layout or test data was used.
