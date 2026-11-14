@@ -1,0 +1,93 @@
+{
+  "provenance": {
+    "item_id": "PA-0301",
+    "idea_seen_in": "Larkspur CLIN Schedule Linter (Larkspur Synthetic Works)",
+    "what_we_took": "the idea for this validator: synthetic line item schedule validator.",
+    "what_we_did_differently": "built only from FAR 97.301-1 and public worked examples; no vendor code, text, layout or test data was used."
+  },
+  "authority": [
+    {
+      "id": "far_97_301",
+      "source": "FAR",
+      "citation": "FAR 97.301-1",
+      "title": "Made-up clause for tests: uniform line item schedule format (FAR has no part 97)",
+      "url": "https://www.acquisition.gov/far/part-97"
+    }
+  ],
+  "schema": {
+    "tool_type": "validator",
+    "title": "synthetic line item schedule validator",
+    "delimiter": "comma",
+    "has_header": true,
+    "tables": [
+      {
+        "id": "pricing_types",
+        "label": "Permitted synthetic pricing codes",
+        "citation": "far_97_301",
+        "codes": [
+          "FFP",
+          "TM",
+          "LH"
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "id": "clin",
+        "label": "Line item number",
+        "required": true,
+        "rule": "digits",
+        "citation": "far_97_301",
+        "min_len": 4,
+        "max_len": 4
+      },
+      {
+        "id": "pricing_code",
+        "label": "Pricing arrangement code",
+        "required": true,
+        "rule": "in_table",
+        "citation": "far_97_301",
+        "table": "pricing_types"
+      },
+      {
+        "id": "office_tag",
+        "label": "Issuing office code",
+        "required": false,
+        "rule": "upper_code",
+        "citation": "far_97_301",
+        "min_len": 5,
+        "max_len": 8,
+        "prefix": "SYN-"
+      },
+      {
+        "id": "description",
+        "label": "Item description",
+        "required": true,
+        "rule": "text",
+        "citation": "far_97_301",
+        "min_len": 3,
+        "max_len": 60
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "authority": "far_97_301",
+      "input": "clin,pricing_code,office_tag,description\n0001,FFP,SYN-01,Base engineering support\n0002,TM,, surge support hours\n",
+      "expected": {
+        "valid": true,
+        "row_count": 2,
+        "error_count": 0
+      }
+    },
+    {
+      "authority": "far_97_301",
+      "input": "clin,pricing_code,office_tag,description\n01,CPFF,BAD-1,\n",
+      "expected": {
+        "valid": false,
+        "row_count": 1,
+        "error_count": 4
+      }
+    }
+  ]
+}

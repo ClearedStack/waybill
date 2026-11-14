@@ -1,0 +1,105 @@
+{
+  "contract_version": "v1",
+  "item_id": "itm-0003",
+  "state": "approved",
+  "determination": {
+    "decision": "build"
+  },
+  "source": {
+    "product": "Tessaly Scorebook",
+    "vendor": "Tessaly Imaginary Software"
+  },
+  "title": "weighted evaluation score and margin over a threshold",
+  "authority": [
+    {
+      "id": "dfars_297_7001",
+      "source": "DFARS",
+      "citation": "DFARS 297.7001",
+      "title": "Made-up section for tests: weighted evaluation score (DFARS has no part 297)"
+    },
+    {
+      "id": "nist_sp_8999",
+      "source": "NIST",
+      "citation": "NIST SP 8999",
+      "title": "Made-up publication for tests: worked scoring examples"
+    }
+  ],
+  "tool_type": "calculator",
+  "tool": {
+    "inputs": [
+      {
+        "name": "technical",
+        "type": "number",
+        "unit": "point",
+        "min": "0",
+        "max": "100"
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "unit": "point",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "name": "threshold",
+        "type": "number",
+        "unit": "point",
+        "min": 0,
+        "max": 100
+      }
+    ],
+    "outputs": [
+      {
+        "name": "score",
+        "type": "number",
+        "unit": "point",
+        "formula": "technical * 0.60 + price * 0.40"
+      },
+      {
+        "name": "margin",
+        "type": "number",
+        "unit": "point",
+        "formula": "max((technical*0.6+price*0.4)-threshold, 0)"
+      }
+    ],
+    "worked_examples": [
+      {
+        "authority": "nist_sp_8999",
+        "inputs": {
+          "technical": 80,
+          "price": 70,
+          "threshold": 75
+        },
+        "expected": {
+          "score": 76,
+          "margin": 1
+        }
+      },
+      {
+        "authority": "nist_sp_8999",
+        "inputs": {
+          "technical": 50.5,
+          "price": 62.5,
+          "threshold": 75
+        },
+        "expected": {
+          "score": 55.3,
+          "margin": 0
+        }
+      },
+      {
+        "authority": "dfars_297_7001",
+        "inputs": {
+          "technical": 100,
+          "price": 100,
+          "threshold": 0
+        },
+        "expected": {
+          "score": 100,
+          "margin": 100
+        }
+      }
+    ]
+  }
+}

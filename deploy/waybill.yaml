@@ -1,0 +1,101 @@
+# Waybill worker in the cs-workers namespace.
+#
+# No secrets, passwords, or keys are used or stored here; Waybill authenticates
+# to Muster with its projected Kubernetes ServiceAccount token and holds zero
+# database or repository credentials.
+#
+# Replace the placeholder all-zero sha256 digest with the arm64 image digest
+# produced by Keelworks (`ko build`) in Lazarette before applying.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: waybill
+  namespace: cs-workers
+  labels:
+    app.kubernetes.io/name: waybill
+    app.kubernetes.io/part-of: clearedstack
+    app.kubernetes.io/component: worker
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: waybill
+  namespace: cs-workers
+  labels:
+    app.kubernetes.io/name: waybill
+    app.kubernetes.io/part-of: clearedstack
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/version: v0.1.0-draft
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: waybill
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: waybill
+        app.kubernetes.io/part-of: clearedstack
+        app.kubernetes.io/component: worker
+    spec:
+      serviceAccountName: waybill
+      automountServiceAccountToken: true
+      enableServiceLinks: false
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - cm3588-plus
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: waybill
+          image: lazarette.clearedstack.svc.cluster.local:5000/waybill@sha256:0000000000000000000000000000000000000000000000000000000000000000
+          imagePullPolicy: IfNotPresent
+          args:
+            - run
+          env:
+            - name: CONTRACT_VERSION
+              value: v1
+            - name: MUSTER_URL
+              value: http://muster.clearedstack.svc.cluster.local:8080
+            - name: WAYBILL_SPOOL_DIR
+              value: /var/spool/cs
+            - name: GOMEMLIMIT
+              value: 24MiB
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+            limits:
+              cpu: 100m
+              memory: 30Mi
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: spool
+              mountPath: /var/spool/cs
+      volumes:
+        - name: spool
+          emptyDir:
+            sizeLimit: 16Mi

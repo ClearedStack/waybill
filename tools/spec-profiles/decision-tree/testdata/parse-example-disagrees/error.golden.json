@@ -1,0 +1,8 @@
+{
+  "item_id": "PA-0405",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the decision-tree evaluation does not match the expected outcome",
+    "field": "tool.worked_examples[0].expected"
+  }
+}

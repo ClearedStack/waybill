@@ -1,0 +1,9 @@
+{
+  "item_id": "itm-0102",
+  "state": "needs_subtool",
+  "error": {
+    "code": "E_NEEDS_SUBTOOL",
+    "message": "the formula uses a function the calculator profile does not cover",
+    "field": "tool.outputs[0].formula"
+  }
+}

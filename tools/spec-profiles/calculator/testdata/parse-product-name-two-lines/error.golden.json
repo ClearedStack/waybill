@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0213",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the product name is missing or malformed",
+    "field": "source.product"
+  }
+}

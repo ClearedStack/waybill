@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0201",
+  "error": {
+    "code": "E_PARSE",
+    "message": "no statutory authority is given",
+    "field": "authority"
+  }
+}

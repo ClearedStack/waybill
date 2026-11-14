@@ -1,0 +1,8 @@
+{
+  "item_id": "itm-0215",
+  "error": {
+    "code": "E_PARSE",
+    "message": "the item is not in the approved state",
+    "field": "state"
+  }
+}

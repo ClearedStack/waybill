@@ -1,0 +1,3 @@
+Idea seen in: an observed commercial allowance calculator (nominative attribution omitted on verified opt-out)
+What we took: the idea for this calculator: prorated daily allowance with a cap.
+What we did differently: built only from FAR 97.101-1 and public worked examples; no vendor code, text, layout or test data was used.

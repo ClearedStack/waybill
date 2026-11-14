@@ -1,0 +1,65 @@
+{
+  "provenance": {
+    "item_id": "PA-0042",
+    "idea_seen_in": "an observed commercial allowance calculator (nominative attribution omitted on verified opt-out)",
+    "what_we_took": "the idea for this calculator: prorated daily allowance with a cap.",
+    "what_we_did_differently": "built only from FAR 97.101-1 and public worked examples; no vendor code, text, layout or test data was used."
+  },
+  "authority": [
+    {
+      "id": "far_97_101",
+      "source": "FAR",
+      "citation": "FAR 97.101-1",
+      "title": "Made-up clause for tests: prorated daily allowance (FAR has no part 97)",
+      "url": "https://www.acquisition.gov/far/part-97"
+    }
+  ],
+  "schema": {
+    "tool_type": "calculator",
+    "title": "prorated daily allowance with a cap",
+    "inputs": [
+      {
+        "name": "days",
+        "type": "number",
+        "unit": "day",
+        "min": 0,
+        "max": 365
+      },
+      {
+        "name": "daily_amount",
+        "type": "number",
+        "unit": "USD",
+        "min": 0,
+        "max": 1000
+      },
+      {
+        "name": "cap",
+        "type": "number",
+        "unit": "USD",
+        "min": 0,
+        "max": 100000
+      }
+    ],
+    "outputs": [
+      {
+        "name": "allowance",
+        "type": "number",
+        "unit": "USD",
+        "formula": "min(days * daily_amount, cap)"
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "authority": "far_97_101",
+      "inputs": {
+        "cap": 500,
+        "daily_amount": 25.5,
+        "days": 4
+      },
+      "expected": {
+        "allowance": 102
+      }
+    }
+  ]
+}

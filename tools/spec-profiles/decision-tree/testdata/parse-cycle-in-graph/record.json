@@ -1,0 +1,61 @@
+{
+  "contract_version": "v1",
+  "item_id": "PA-0403",
+  "state": "approved",
+  "determination": {
+    "decision": "build"
+  },
+  "source": {
+    "product": "Thornfield Routing Wizard",
+    "vendor": "Thornfield Testware"
+  },
+  "title": "synthetic threshold routing decision tree",
+  "authority": [
+    {
+      "id": "far_97_401",
+      "source": "FAR",
+      "citation": "FAR 97.401-1",
+      "title": "Made-up clause for tests: simplified routing thresholds (FAR has no part 97)"
+    }
+  ],
+  "tool_type": "decision-tree",
+  "tool": {
+    "start": "q_one",
+    "questions": [
+      {
+        "id": "q_one",
+        "prompt": "First synthetic question?",
+        "citation": "far_97_401",
+        "options": [
+          { "key": "yes", "label": "Yes", "next": "q_two" },
+          { "key": "no", "label": "No", "next": "out_ok" }
+        ]
+      },
+      {
+        "id": "q_two",
+        "prompt": "Second synthetic question looping back?",
+        "citation": "far_97_401",
+        "options": [
+          { "key": "back", "label": "Loop back", "next": "q_one" },
+          { "key": "done", "label": "Done", "next": "out_ok" }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "out_ok",
+        "title": "Eligible",
+        "summary": "Synthetic outcome.",
+        "status": "eligible",
+        "citation": "far_97_401"
+      }
+    ],
+    "worked_examples": [
+      {
+        "authority": "far_97_401",
+        "answers": { "q_one": "no" },
+        "expected": { "outcome": "out_ok", "status": "eligible", "steps": 1 }
+      }
+    ]
+  }
+}

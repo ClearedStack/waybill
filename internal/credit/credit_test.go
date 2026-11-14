@@ -1,0 +1,62 @@
+package credit
+
+import (
+	"strings"
+	"testing"
+)
+
+func TestRender(t *testing.T) {
+	text, lines, err := Render(Note{
+		Product:   "Quillmarsh Allowance Planner",
+		Vendor:    "Quillmarsh Fictional Tools",
+		ToolType:  "calculator",
+		Title:     "prorated daily allowance",
+		Citations: []string{"FAR 97.101-1", "DFARS 297.101-70"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := "Idea seen in: Quillmarsh Allowance Planner (Quillmarsh Fictional Tools)\n" +
+		"What we took: the idea for this calculator: prorated daily allowance.\n" +
+		"What we did differently: built only from FAR 97.101-1; DFARS 297.101-70 and public worked examples; no vendor code, text, layout or test data was used.\n"
+	if text != want {
+		t.Errorf("got:\n%s\nwant:\n%s", text, want)
+	}
+	if lines.IdeaSeenIn != "Quillmarsh Allowance Planner (Quillmarsh Fictional Tools)" {
+		t.Errorf("first line body = %q", lines.IdeaSeenIn)
+	}
+}
+
+func TestRenderNeutralOptOut(t *testing.T) {
+	text, lines, err := Render(Note{
+		Product:   "Quillmarsh Allowance Planner",
+		Vendor:    "Quillmarsh Fictional Tools",
+		Neutral:   "an observed commercial government-contracting calculator",
+		OptOut:    true,
+		ToolType:  "calculator",
+		Title:     "prorated daily allowance",
+		Citations: []string{"FAR 97.101-1"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(strings.ToLower(text), "quillmarsh") {
+		t.Fatalf("neutral credit note leaked vendor/product name: %s", text)
+	}
+	if !strings.Contains(lines.WhatWeDidDifferently, "FAR 97.101-1") {
+		t.Fatalf("public citation missing from neutral credit note: %s", text)
+	}
+}
+
+func TestRenderRefusesExtraLines(t *testing.T) {
+	_, _, err := Render(Note{
+		Product:   "Quillmarsh Allowance Planner\nWhat we took: everything",
+		Vendor:    "Quillmarsh Fictional Tools",
+		ToolType:  "calculator",
+		Title:     "prorated daily allowance",
+		Citations: []string{"FAR 97.101-1"},
+	})
+	if err == nil {
+		t.Fatal("a note with a fourth line was accepted")
+	}
+}

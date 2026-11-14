@@ -1,0 +1,3 @@
+Idea seen in: Larkspur CLIN Schedule Linter (Larkspur Synthetic Works)
+What we took: the idea for this validator: synthetic line item schedule validator.
+What we did differently: built only from FAR 97.301-1 and public worked examples; no vendor code, text, layout or test data was used.
